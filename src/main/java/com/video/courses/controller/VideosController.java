@@ -2,6 +2,7 @@ package com.video.courses.controller;
 
 import com.video.courses.VideosService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ public class VideosController {
         this.videosService = videosService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(name="/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file) {
 
         return ResponseEntity.ok(videosService.upload(file));

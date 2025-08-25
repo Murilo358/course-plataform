@@ -24,9 +24,8 @@ public class MuxConfiguration {
         ApiClient client = new ApiClient();
 
         client.setBasePath("https://api.mux.com");
-        HttpBasicAuth auth = (HttpBasicAuth) client.getAuthentication("accessToken");
-        auth.setUsername(tokenId);
-        auth.setPassword(tokenSecret);
+        client.setUsername(tokenId);
+        client.setPassword(tokenSecret);
 
 
         return client;

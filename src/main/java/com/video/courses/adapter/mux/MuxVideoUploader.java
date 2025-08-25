@@ -1,5 +1,6 @@
 package com.video.courses.adapter.mux;
 
+import com.mux.ApiException;
 import com.mux.sdk.DirectUploadsApi;
 import com.mux.sdk.models.*;
 import com.video.courses.ports.upload.VideoUploader;
@@ -42,14 +43,14 @@ public class MuxVideoUploader implements VideoUploader {
             Upload uploadData = data.get();
             Upload.StatusEnum status = uploadData.getStatus();
 
-            if(status != Upload.StatusEnum.ASSET_CREATED){
-                 return Optional.empty();
+            if(status != Upload.StatusEnum.WAITING){
+                 return Optional.ofNullable(uploadData.getUrl());
             }
 
-            return Optional.ofNullable(uploadData.getUrl());
+            return Optional.empty();
 
 
-        } catch (Exception e) {
+        } catch (ApiException e) {
             throw new RuntimeException(e);
         }
     }
