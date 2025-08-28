@@ -26,4 +26,10 @@ public class VideosController {
     public ResponseEntity<PreVideoUploadReturnDTO> uploadVideo() {
         return ResponseEntity.ok(videosService.getUploadUrl());
     }
+
+    @PostMapping(name = "new-video")
+    public ResponseEntity<?> createNewVideo(@RequestBody VideoUploadDto videoUploadDto){
+        return ResponseEntity.ok(videosService.createNewVideo(videoUploadDto));
+    }
+
 }
