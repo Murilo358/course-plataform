@@ -14,11 +14,12 @@ END$$;
 
 CREATE TABLE IF NOT EXISTS videos_upload
 (
-    id                SERIAL primary key,
+    id                BIGSERIAL primary key,
     upload_url        TEXT,
     created_at        TIMESTAMPTZ  DEFAULT NOW(),
     status            video_status default 'waiting',
     error_message     TEXT,
+    expires_at TIMESTAMPZ default (NOW() + interval '1 hour'),
     external_video_id TEXT,
     video_id          BIGINT REFERENCES videos (id)
 );

@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS categories (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     category_name VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS courses
 (
-    id             SERIAL PRIMARY KEY,
+    id             BIGSERIAL PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
     description    TEXT,
     level          TEXT, --todo create enum
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS courses
 
 CREATE TABLE IF NOT EXISTS  videos
 (
-    id                SERIAL PRIMARY KEY,
+    id                BIGSERIAL PRIMARY KEY,
     external_video_id BIGINT,
     course_id         BIGINT references courses (id),
     title             TEXT,
