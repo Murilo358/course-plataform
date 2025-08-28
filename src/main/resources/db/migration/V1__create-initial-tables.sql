@@ -1,9 +1,9 @@
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     category_name VARCHAR(255)
 );
 
-CREATE TABLE courses
+CREATE TABLE IF NOT EXISTS courses
 (
     id             SERIAL PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE courses
 );
 
 
-CREATE TABLE videos
+CREATE TABLE IF NOT EXISTS  videos
 (
     id                SERIAL PRIMARY KEY,
     external_video_id BIGINT,

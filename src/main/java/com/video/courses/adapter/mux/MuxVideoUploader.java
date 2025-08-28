@@ -3,6 +3,7 @@ package com.video.courses.adapter.mux;
 import com.mux.ApiException;
 import com.mux.sdk.DirectUploadsApi;
 import com.mux.sdk.models.*;
+import com.video.courses.dto.VideoUploaderDTO;
 import com.video.courses.ports.upload.VideoUploader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class MuxVideoUploader implements VideoUploader {
 
 
     @Override
-    public Optional<String> getUploadUrl() {
+    public VideoUploaderDTO getUploadUrl() {
         try {
 
             CreateUploadRequest request = new CreateUploadRequest()
@@ -37,17 +38,18 @@ public class MuxVideoUploader implements VideoUploader {
             UploadResponse execute = upload.execute();
             Optional<Upload> data = Optional.ofNullable(execute.getData());
             if(data.isEmpty()){
-                return Optional.empty();
+                return null;
             }
 
             Upload uploadData = data.get();
             Upload.StatusEnum status = uploadData.getStatus();
 
-            if(status != Upload.StatusEnum.WAITING){
-                 return Optional.ofNullable(uploadData.getUrl());
+            if(Upload.StatusEnum.WAITING.equals(status)){
+                String errorMessage = Optional.ofNullable(uploadData.getError()).map(UploadError::getMessage).orElse(null);
+                return new VideoUploaderDTO(uploadData.getId(), uploadData.getUrl(),errorMessage);
             }
 
-            return Optional.empty();
+            return null;
 
 
         } catch (ApiException e) {
