@@ -1,38 +1,50 @@
 package com.video.courses;
 
+import com.video.courses.dto.ExternalVideoUploaderDto;
+import com.video.courses.dto.PreVideoUploadReturnDTO;
 import com.video.courses.dto.VideoUploadDto;
-import com.video.courses.dto.VideoUploaderDTO;
-import com.video.courses.models.enums.VideoStatus;
 import com.video.courses.ports.upload.VideoUploader;
-import org.jooq.DSLContext;
+import com.video.courses.repositories.videos.VideoRepository;
 import org.springframework.stereotype.Service;
-
-import static com.video.courses.models.Tables.VIDEOS_UPLOAD;
 
 @Service
 public class VideosService {
 
     private final VideoUploader videoUploader;
+    private final VideoRepository videoRepository;
 
-    private final DSLContext dsl;
-
-    public VideosService(VideoUploader videoUploader, DSLContext dsl) {
+    public VideosService(VideoUploader videoUploader, VideoRepository videoRepository) {
         this.videoUploader = videoUploader;
-        this.dsl = dsl;
+        this.videoRepository = videoRepository;
     }
 
-    public VideoUploadDto getUploadUrl(){
-        VideoUploaderDTO upload = videoUploader.getUploadUrl();
+    public PreVideoUploadReturnDTO getUploadUrl(){
+        ExternalVideoUploaderDto upload = videoUploader.getUploadUrl();
 
-        long videoUploadId = dsl.insertInto(VIDEOS_UPLOAD)
-                .set(VIDEOS_UPLOAD.UPLOAD_URL, upload.uploadUrl())
-                .set(VIDEOS_UPLOAD.ERROR_MESSAGE, upload.errorMessage())
-                .set(VIDEOS_UPLOAD.STATUS, VideoStatus.waiting)
-                .returning(VIDEOS_UPLOAD.ID)
-                .execute();
-        return new VideoUploadDto(videoUploadId, upload.uploadUrl(), upload.errorMessage());
+        if(upload == null){
+            return null;
+        }
+
+        long preVideoRegisterId = videoRepository.createPreVideoRegister(upload.uploadUrl(), upload.errorMessage());
+
+        return new PreVideoUploadReturnDTO(preVideoRegisterId, upload.uploadUrl(), upload.errorMessage());
 
     }
 
 
+    private void validate(VideoUploadDto dto){
+
+        videoRepository.doesPreRegisterVideoExists(dto.uploadId()); //todo throw new validation exception
+
+        dto.courseId(); //todo verify if course exists
+
+        dto.externalVideoId(); //todo colocar como not null no request
+
+
+
+    }
+
+    public Object createNewVideo(VideoUploadDto dto) {
+        return null; //todo implements
+    }
 }
