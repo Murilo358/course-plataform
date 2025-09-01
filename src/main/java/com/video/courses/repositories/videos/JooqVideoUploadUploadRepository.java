@@ -5,11 +5,11 @@ import org.jooq.DSLContext;
 
 import static com.video.courses.models.Tables.VIDEOS_UPLOAD;
 
-public class JooqVideoRepository implements VideoRepository {
+public class JooqVideoUploadUploadRepository implements VideoUploadRepository {
 
     private final DSLContext dsl;
 
-    public JooqVideoRepository(DSLContext dsl) {
+    public JooqVideoUploadUploadRepository(DSLContext dsl) {
         this.dsl = dsl;
     }
 
