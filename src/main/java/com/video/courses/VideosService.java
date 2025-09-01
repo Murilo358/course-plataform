@@ -3,19 +3,26 @@ package com.video.courses;
 import com.video.courses.dto.ExternalVideoUploaderDto;
 import com.video.courses.dto.PreVideoUploadReturnDTO;
 import com.video.courses.dto.VideoUploadDto;
+import com.video.courses.exceptions.ValidationException;
 import com.video.courses.ports.upload.VideoUploader;
-import com.video.courses.repositories.videos.VideoRepository;
+import com.video.courses.repositories.courses.CourseRepository;
+import com.video.courses.repositories.videos.VideoUploadRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class VideosService {
 
     private final VideoUploader videoUploader;
-    private final VideoRepository videoRepository;
+    private final VideoUploadRepository videoUploadRepository;
+    private final CourseRepository courseRepository;
 
-    public VideosService(VideoUploader videoUploader, VideoRepository videoRepository) {
+    public VideosService(VideoUploader videoUploader, VideoUploadRepository videoUploadRepository, CourseRepository courseRepository) {
         this.videoUploader = videoUploader;
-        this.videoRepository = videoRepository;
+        this.videoUploadRepository = videoUploadRepository;
+        this.courseRepository = courseRepository;
     }
 
     public PreVideoUploadReturnDTO getUploadUrl(){
@@ -25,7 +32,7 @@ public class VideosService {
             return null;
         }
 
-        long preVideoRegisterId = videoRepository.createPreVideoRegister(upload.uploadUrl(), upload.errorMessage());
+        long preVideoRegisterId = videoUploadRepository.createPreVideoRegister(upload.uploadUrl(), upload.errorMessage());
 
         return new PreVideoUploadReturnDTO(preVideoRegisterId, upload.uploadUrl(), upload.errorMessage());
 
@@ -34,17 +41,27 @@ public class VideosService {
 
     private void validate(VideoUploadDto dto){
 
-        videoRepository.doesPreRegisterVideoExists(dto.uploadId()); //todo throw new validation exception
+        List<ValidationException.FieldError> errors = new ArrayList<>();
 
-        dto.courseId(); //todo verify if course exists
+        if (!videoUploadRepository.doesPreRegisterVideoExists(dto.uploadId())) {
+            errors.add(new ValidationException.FieldError("Pre register video required!", "the sent pre registered video id wasn't found"));
+        }
 
-        dto.externalVideoId(); //todo colocar como not null no request
+        if (!courseRepository.courseExists(dto.courseId())) {
+            errors.add(new ValidationException.FieldError("A valid course is required!", "the sent course id wasn't found"));
+        }
 
-
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
 
     }
 
-    public Object createNewVideo(VideoUploadDto dto) {
+    public Object createNewVideo(VideoUploadDto videoUploadDto) {
+        validate(videoUploadDto);
+
+
+
         return null; //todo implements
     }
 }

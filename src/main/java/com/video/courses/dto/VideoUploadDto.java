@@ -1,4 +1,6 @@
 package com.video.courses.dto;
 
-public record VideoUploadDto(Long uploadId, String videoTitle, String videoDescription, Long courseId, Long externalVideoId) {
+import jakarta.validation.constraints.NotNull;
+
+public record VideoUploadDto(@NotNull Long uploadId, @NotNull String videoTitle, String videoDescription, @NotNull Long courseId, @NotNull Long externalVideoId) {
 }
