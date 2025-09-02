@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS courses
 CREATE TABLE IF NOT EXISTS  videos
 (
     id                BIGSERIAL PRIMARY KEY,
-    external_video_id BIGINT,
+    external_video_id TEXT,
     course_id         BIGINT references courses (id),
     title             TEXT,
     description       TEXT,
