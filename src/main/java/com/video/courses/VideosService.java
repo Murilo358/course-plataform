@@ -6,7 +6,8 @@ import com.video.courses.dto.VideoUploadDto;
 import com.video.courses.exceptions.ValidationException;
 import com.video.courses.ports.upload.VideoUploader;
 import com.video.courses.repositories.courses.CourseRepository;
-import com.video.courses.repositories.videos.VideoUploadRepository;
+import com.video.courses.repositories.videos.VideoRepository;
+import com.video.courses.repositories.videosUpload.VideoUploadRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,11 +19,13 @@ public class VideosService {
     private final VideoUploader videoUploader;
     private final VideoUploadRepository videoUploadRepository;
     private final CourseRepository courseRepository;
+    private final VideoRepository videoRepository;
 
-    public VideosService(VideoUploader videoUploader, VideoUploadRepository videoUploadRepository, CourseRepository courseRepository) {
+    public VideosService(VideoUploader videoUploader, VideoUploadRepository videoUploadRepository, CourseRepository courseRepository, VideoRepository videoRepository) {
         this.videoUploader = videoUploader;
         this.videoUploadRepository = videoUploadRepository;
         this.courseRepository = courseRepository;
+        this.videoRepository = videoRepository;
     }
 
     public PreVideoUploadReturnDTO getUploadUrl(){
@@ -47,7 +50,7 @@ public class VideosService {
             errors.add(new ValidationException.FieldError("Pre register video required!", "the sent pre registered video id wasn't found"));
         }
 
-        if (!courseRepository.courseExists(dto.courseId())) {
+        if (!courseRepository.isCourseExists(dto.courseId())) {
             errors.add(new ValidationException.FieldError("A valid course is required!", "the sent course id wasn't found"));
         }
 
@@ -57,11 +60,9 @@ public class VideosService {
 
     }
 
-    public Object createNewVideo(VideoUploadDto videoUploadDto) {
+    public long createNewVideo(VideoUploadDto videoUploadDto) {
         validate(videoUploadDto);
 
-
-
-        return null; //todo implements
+        return videoRepository.saveNewVideo(videoUploadDto);
     }
 }

@@ -1,10 +1,12 @@
-package com.video.courses.repositories.videos;
+package com.video.courses.repositories.videosUpload;
 
 import com.video.courses.models.enums.VideoStatus;
 import org.jooq.DSLContext;
+import org.springframework.stereotype.Repository;
 
 import static com.video.courses.models.Tables.VIDEOS_UPLOAD;
 
+@Repository
 public class JooqVideoUploadUploadRepository implements VideoUploadRepository {
 
     private final DSLContext dsl;

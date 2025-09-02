@@ -1,8 +1,5 @@
-package com.video.courses.repositories.videos;
+package com.video.courses.repositories.videosUpload;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 public interface VideoUploadRepository {
 
     long createPreVideoRegister(String uploadUrl, String errorMessage);
