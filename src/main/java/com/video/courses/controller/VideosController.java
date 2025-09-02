@@ -22,13 +22,13 @@ public class VideosController {
         this.videosService = videosService;
     }
 
-    @GetMapping(name="/upload-url")
+    @GetMapping(value="/upload-url")
     public ResponseEntity<PreVideoUploadReturnDTO> uploadVideo() {
         return ResponseEntity.ok(videosService.getUploadUrl());
     }
 
-    @PostMapping(name = "new-video")
-    public ResponseEntity<?> createNewVideo(@RequestBody VideoUploadDto videoUploadDto){
+    @PostMapping()
+    public ResponseEntity<Long> createNewVideo(@RequestBody VideoUploadDto videoUploadDto){
         return ResponseEntity.ok(videosService.createNewVideo(videoUploadDto));
     }
 
