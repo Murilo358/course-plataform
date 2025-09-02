@@ -19,7 +19,7 @@ public class JooqCourseRepository implements CourseRepository {
     }
 
     @Override
-    public boolean courseExists(long courseId) {
+    public boolean isCourseExists(long courseId) {
         return dslContext.fetchExists(
                 dslContext.selectFrom(COURSES)
                         .where(COURSES.ID.eq(Math.toIntExact(courseId)))

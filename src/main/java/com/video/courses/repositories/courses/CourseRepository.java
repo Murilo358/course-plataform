@@ -4,7 +4,7 @@ import com.video.courses.models.courses.CourseModel;
 
 public interface CourseRepository {
 
-    boolean courseExists(long courseId);
+    boolean isCourseExists(long courseId);
 
     CourseModel findCourseById(long courseId);
 }
