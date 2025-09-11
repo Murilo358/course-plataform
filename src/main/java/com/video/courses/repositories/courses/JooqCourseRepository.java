@@ -1,5 +1,6 @@
 package com.video.courses.repositories.courses;
 
+import com.video.courses.dto.course.CreateCourseDTO;
 import com.video.courses.models.courses.CourseModel;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -51,5 +52,23 @@ public class JooqCourseRepository implements CourseRepository {
         }
 
         return null;
+    }
+
+    @Override
+    public long createNewCourse(CreateCourseDTO createCourseDTO) {
+
+        return dslContext.insertInto(COURSES)
+                .set(COURSES.TITLE, createCourseDTO.title())
+                .set(COURSES.DESCRIPTION, createCourseDTO.description())
+                .set(COURSES.LEVEL, createCourseDTO.level())
+                .set(COURSES.CATEGORY_ID, createCourseDTO.categoryId())
+                .set(COURSES.TOTAL_DURATION, createCourseDTO.totalDuration().intValue())
+                .set(COURSES.PUBLISHED, createCourseDTO.published())
+                .set(COURSES.PROFESSOR_ID, createCourseDTO.professorId())
+                .set(COURSES.REQUIREMENTS, createCourseDTO.requirements())
+                .set(COURSES.CREATED_AT, createCourseDTO.createdAt())
+                .returning(COURSES.ID)
+                .execute();
+
     }
 }
