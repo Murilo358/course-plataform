@@ -1,8 +1,8 @@
-package com.video.courses.controller;
+package com.video.courses.controller.video;
 
-import com.video.courses.VideosService;
-import com.video.courses.dto.VideoUploadDto;
-import com.video.courses.dto.PreVideoUploadReturnDTO;
+import com.video.courses.service.video.VideosService;
+import com.video.courses.dto.video.VideoUploadDto;
+import com.video.courses.dto.video.PreVideoUploadReturnDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

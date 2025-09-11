@@ -1,6 +1,6 @@
 package com.video.courses.repositories.videos;
 
-import com.video.courses.dto.VideoUploadDto;
+import com.video.courses.dto.video.VideoUploadDto;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 

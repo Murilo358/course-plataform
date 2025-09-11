@@ -1,6 +1,6 @@
 package com.video.courses.ports.upload;
 
-import com.video.courses.dto.ExternalVideoUploaderDto;
+import com.video.courses.dto.video.ExternalVideoUploaderDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;

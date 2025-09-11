@@ -1,8 +1,8 @@
-package com.video.courses;
+package com.video.courses.service.video;
 
-import com.video.courses.dto.ExternalVideoUploaderDto;
-import com.video.courses.dto.PreVideoUploadReturnDTO;
-import com.video.courses.dto.VideoUploadDto;
+import com.video.courses.dto.video.ExternalVideoUploaderDto;
+import com.video.courses.dto.video.PreVideoUploadReturnDTO;
+import com.video.courses.dto.video.VideoUploadDto;
 import com.video.courses.exceptions.ValidationException;
 import com.video.courses.ports.upload.VideoUploader;
 import com.video.courses.repositories.courses.CourseRepository;

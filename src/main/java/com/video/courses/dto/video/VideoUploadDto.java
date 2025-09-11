@@ -1,4 +1,4 @@
-package com.video.courses.dto;
+package com.video.courses.dto.video;
 
 import jakarta.validation.constraints.NotNull;
 

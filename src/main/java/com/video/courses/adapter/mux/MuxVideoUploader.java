@@ -3,7 +3,7 @@ package com.video.courses.adapter.mux;
 import com.mux.ApiException;
 import com.mux.sdk.DirectUploadsApi;
 import com.mux.sdk.models.*;
-import com.video.courses.dto.ExternalVideoUploaderDto;
+import com.video.courses.dto.video.ExternalVideoUploaderDto;
 import com.video.courses.ports.upload.VideoUploader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
