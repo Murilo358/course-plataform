@@ -5,14 +5,12 @@ import com.video.courses.dto.video.VideoUploadDto;
 import com.video.courses.dto.video.PreVideoUploadReturnDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
-@RestController("/videos")
+@RestController
+@RequestMapping("/videos")
 public class VideosController {
 
 
@@ -27,7 +25,7 @@ public class VideosController {
         return ResponseEntity.ok(videosService.getUploadUrl());
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Long> createNewVideo(@RequestBody VideoUploadDto videoUploadDto){
         return ResponseEntity.ok(videosService.createNewVideo(videoUploadDto));
     }

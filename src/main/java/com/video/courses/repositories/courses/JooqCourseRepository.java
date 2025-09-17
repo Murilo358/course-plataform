@@ -6,6 +6,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import static com.video.courses.models.Tables.COURSES;
@@ -66,7 +67,7 @@ public class JooqCourseRepository implements CourseRepository {
                 .set(COURSES.PUBLISHED, createCourseDTO.published())
                 .set(COURSES.PROFESSOR_ID, createCourseDTO.professorId())
                 .set(COURSES.REQUIREMENTS, createCourseDTO.requirements())
-                .set(COURSES.CREATED_AT, createCourseDTO.createdAt())
+                .set(COURSES.CREATED_AT, OffsetDateTime.now())
                 .returning(COURSES.ID)
                 .execute();
 
